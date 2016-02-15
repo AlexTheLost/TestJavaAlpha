@@ -15,7 +15,7 @@ public class PhoneConstraintValidator implements ConstraintValidator<Phone, Stri
         if (phoneField == null) {
             return false;
         }
-        if (PhoneValidator.notValid(phoneField)) {
+        if (!PhoneValidator.valid(phoneField)) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(ERROR_MSG).addConstraintViolation();
             return false;

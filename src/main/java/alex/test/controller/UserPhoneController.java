@@ -21,7 +21,7 @@ public class UserPhoneController {
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<String> add(@RequestBody @Valid UserPhone userPhone) {
         userPhoneService.save(userPhone);
-        return new ResponseEntity("{val: some}", HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }
