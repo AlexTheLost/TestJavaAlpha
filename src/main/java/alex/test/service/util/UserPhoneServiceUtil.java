@@ -5,9 +5,6 @@ import alex.test.controller.validation.PhoneValidator;
 import alex.test.domain.UserPhone;
 import org.springframework.util.StringUtils;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
 public class UserPhoneServiceUtil {
@@ -16,20 +13,16 @@ public class UserPhoneServiceUtil {
     public static final int LOCAL_PART = 9;
     private static final DateTimeFormatter HH_MM_SS = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-    public static void addLineSeparator(File fileForSave, FileWriter writer) throws IOException {
-        if (fileForSave.length() != 0)
-            writer.append(System.lineSeparator());
-    }
-
     public static String prepareFileName(UserPhone userPhone) {
-        return (StringUtils.isEmpty(userPhone.getFirstName()) ? "ABSENT" : userPhone.getFirstName()) + "_" + userPhone.getLastName() + ".txt";
+        return (userPhone.getLastName() + (StringUtils.isEmpty(userPhone.getFirstName()) ? "" : "_" + userPhone.getFirstName())).
+                toUpperCase() + ".txt";
     }
 
     public static String prepareRecord(UserPhone userPhone) {
         String rawPhoneNumber = PhoneValidator.cleaning(userPhone.getNumber());
         String toStorePhoneNumber = normalized(rawPhoneNumber);
         String toStoreCreationTime = userPhone.getTime().format(HH_MM_SS);
-        return (toStoreCreationTime + " " + toStorePhoneNumber).toUpperCase();
+        return toStoreCreationTime + " " + toStorePhoneNumber;
     }
 
     private static String normalized(String rawPhone) {

@@ -34,13 +34,19 @@ public class UserPhoneService {
     public UserPhone save(UserPhone userPhone) {
         File fileForSave = getFileForSave(userPhone);
         try (FileWriter writer = new FileWriter(fileForSave, true)) {
-            UserPhoneServiceUtil.addLineSeparator(fileForSave, writer);
-            writer.write(UserPhoneServiceUtil.prepareRecord(userPhone));
+            addLineSeparator(fileForSave, writer);
+            String record = UserPhoneServiceUtil.prepareRecord(userPhone);
+            writer.write(record);
             writer.flush();
         } catch (IOException e) {
             throw new IllegalStateException("For: " + userPhone, e);
         }
         return userPhone;
+    }
+
+    private void addLineSeparator(File fileForSave, FileWriter writer) throws IOException {
+        if (fileForSave.length() != 0)
+            writer.append(System.lineSeparator());
     }
 
     private File getFileForSave(UserPhone userPhone) {

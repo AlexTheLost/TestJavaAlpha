@@ -8,13 +8,13 @@ public class PhoneValidator {
         return bracketsLeftEqualRight(phone) && cleaning(phone).matches(REGEX_FOR_VALIDATE_PURIFIED);
     }
 
+    /**
+     * Step before validation, cleaning of noise symbols.
+     */
     public static String cleaning(String rawPhone) {
         return rawPhone.replaceAll(REGEX_FOR_CLEARING_RAW, "");
     }
 
-    /**
-     * Shunting-yard algorithm anolog. Simple counting number of brachets not situable, because not consider cause - ')('.
-     */
     public static boolean bracketsLeftEqualRight(String phoneNumber) {
         int counter = 0;
         for (char c : phoneNumber.toCharArray()) {
